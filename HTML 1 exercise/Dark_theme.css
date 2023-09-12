@@ -1,0 +1,15 @@
+body {
+  background-color: #001523;
+}
+h1,
+h2,
+p,
+table,
+li {
+  color: white;
+  font-style: italic;
+  position: relative;
+}
+a {
+  color: aqua;
+}
