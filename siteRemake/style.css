@@ -21,6 +21,7 @@ body {
 .topnav a:hover {
   background-color: #ddd;
   color: black;
+  width: 50px;
 }
 
 .topnav a.active {
@@ -33,6 +34,7 @@ body {
   text-indent: 5cm;
   font-size: 35px;
   margin-left: 20px;
+  text-shadow: 2px 2px 5px red;
 }
 img {
   display: block;
@@ -51,4 +53,5 @@ input {
 input:hover {
   background-color: #4caf50;
   color: white;
+  transition: ease-out;
 }
