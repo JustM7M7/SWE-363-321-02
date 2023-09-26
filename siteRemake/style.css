@@ -55,3 +55,6 @@ input:hover {
   color: white;
   transition: ease-out;
 }
+main {
+  height: 100vh;
+}

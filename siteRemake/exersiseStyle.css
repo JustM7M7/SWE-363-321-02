@@ -1,0 +1,67 @@
+::selection {
+  background-color: #ffd700;
+}
+thead {
+  text-transform: uppercase;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  text-transform: capitalize;
+}
+a {
+  color: green;
+}
+a:hover {
+  cursor: pointer;
+  text-decoration: underline green;
+}
+
+em {
+  background-color: #48cae4;
+}
+h2 {
+  font-family: sans-serif;
+}
+.top {
+  color: #eb5406;
+}
+
+#the_most_important {
+  text-transform: uppercase;
+  background-color: #ffd700;
+}
+h2 + p:first-letter {
+  font-size: x-large;
+}
+tbody tr:nth-child(odd) {
+  background-color: #90e0ef;
+}
+tbody tr:hover {
+  background-color: #c7f9cc;
+}
+nav {
+  display: flex;
+  justify-content: center;
+}
+li {
+  margin: 1rem;
+  display: inline;
+}
+li:first-of-type {
+  text-decoration: underline green;
+}
+input {
+  height: 20px;
+  border-color: lightgray;
+}
+input[name="message"] {
+  height: 50px;
+}
+section a {
+  cursor: pointer;
+  color: red;
+}
