@@ -7,6 +7,9 @@ body {
 .topnav {
   overflow: hidden;
   background-color: #00193b;
+  display: flex;
+  align-items: left;
+  padding: 10px;
 }
 
 .topnav a {
@@ -40,6 +43,7 @@ img {
   display: block;
   margin-left: 27cm;
   width: 25%;
+  flex-direction: column-reverse;
 }
 input {
   background-color: #00193b;
