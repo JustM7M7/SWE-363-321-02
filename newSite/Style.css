@@ -1,0 +1,58 @@
+body {
+  background-color: #343a40; /* Dark background color */
+  color: #fff; /* White text color */
+}
+.btn:hover {
+  transform: scale(1.1); /* Increase size on hover */
+  background-color: #007bff; /* Change background color on hover */
+  transition: all 0.3s ease; /* Add smooth transition on hover */
+}
+
+/* Hover effect for navbar links */
+.navbar-brand:hover {
+  color: #007bff; /* Change text color on hover */
+  transition: all 0.3s ease; /* Add smooth transition on hover */
+}
+/* CSS for the section on the right */
+.section-on-right {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 300px;
+  background-color: #f0f0f0;
+}
+
+/* CSS for watermark on images */
+.card img::after {
+  content: "MR";
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  opacity: 0.5;
+}
+.navbar {
+  color: #007bff;
+  background-color: purple;
+}
+
+.card-title {
+  display: inline-block;
+  width: 60%;
+  vertical-align: middle;
+}
+
+.card-date {
+  display: inline-block;
+  width: 35%;
+  vertical-align: middle;
+  text-align: right;
+}
+/* CSS for watermark on images */
+.watermark::after {
+  content: "MR";
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  opacity: 0.5;
+  /* Additional styling for the watermark */
+}
