@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>mini games</title>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet" href="css/styles.css" />
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+      }
+
+      .cell {
+        font-family: sans-serif;
+        font-size: larger;
+        font-weight: bolder;
+        background-color: beige;
+        width: 100px;
+        height: 100px;
+        border: 1px solid black;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .cell:hover {
+        background-color: blanchedalmond;
+      }
+
+      .row {
+        display: flex;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-dark bg-primary">
+      <a class="navbar-brand" href="Home.html">Home</a>
+      <a class="navbar-brand" href="about.html">About</a>
+      <a class="navbar-brand" href="contact.html">Contact</a>
+      <a class="navbar-brand" href="Exercises.html">Exercises</a>
+      <a class="navbar-brand" href="mini-games.html">mini games</a>
+    </nav>
+    <h1 id="turn">Now it's is <span>X</span> turn</h1>
+    <!-- Board -->
+    <div class="board">
+      <div class="row">
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+      </div>
+      <div class="row">
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+      </div>
+      <div class="row">
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+      </div>
+      <script>
+        let turn = "X";
+        let gameEnded = false;
+        // when we click on a cell add the letter
+        let board = document.getElementsByClassName("board")[0];
+        board.addEventListener("click", cellClicked);
+
+        function cellClicked(event) {
+          let cell = event.target;
+          // Check if the cell is already filled or if the game has ended or it is draw
+          if (!cell.innerText && !gameEnded) {
+            cell.innerText = turn;
+            // Check for a win after each move
+            if (checkWin()) {
+              announceWinner(turn);
+              gameEnded = true;
+            } else if (checkDraw()) {
+              announceDraw();
+              gameEnded = true;
+            } else {
+              turn = turn === "X" ? "O" : "X";
+              // Change title
+              let turnLetter = document.querySelector("#turn span");
+              turnLetter.innerText = turn;
+            }
+          }
+        }
+        function checkWin() {
+          let cells = document.querySelectorAll(".cell");
+          // they are 8 winning combinations
+          const winningCombos = [
+            [0, 1, 2],
+            [3, 4, 5],
+            [6, 7, 8],
+            [0, 3, 6],
+            [1, 4, 7],
+            [2, 5, 8],
+            [0, 4, 8],
+            [2, 4, 6],
+          ];
+
+          for (let combo of winningCombos) {
+            // Desctructure the combo
+            const [a, b, c] = combo;
+            if (
+              cells[a].innerText &&
+              cells[a].innerText === cells[b].innerText &&
+              cells[a].innerText === cells[c].innerText
+            ) {
+              return true;
+            }
+          }
+          return false;
+        }
+        function announceWinner(winner) {
+          let turnElement = document.querySelector("#turn");
+          turnElement.innerText = `Player ${winner} wins!`;
+        }
+        function checkDraw() {
+          let cells = document.querySelectorAll(".cell");
+          for (let cell of cells) {
+            if (!cell.innerText) {
+              return false;
+            }
+          }
+          // All cells are filled, and there is no winner, so it's a draw
+          return true;
+        }
+
+        function announceDraw() {
+          let turnElement = document.querySelector("#turn");
+          turnElement.innerText = "It's a draw!";
+        }
+      </script>
+    </div>
+  </body>
+</html>
