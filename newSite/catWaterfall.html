@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Cat Pics Waterfall</title>
+    <title>Endless Cat Pics Waterfall</title>
     <style>
       body {
         margin: 0;
@@ -20,47 +20,49 @@
         margin: 10px;
         overflow: hidden;
         float: left;
-        animation: waterfall 5s ease infinite;
+        animation: waterfall 2s linear infinite;
       }
 
       @keyframes waterfall {
         0% {
           transform: translateY(0);
         }
-        50% {
-          transform: translateY(100%);
-        }
         100% {
-          transform: translateY(0);
+          transform: translateY(-100%);
         }
       }
     </style>
   </head>
   <body>
-    <h1>each time you reload the page you will get a different picture ^_^</h1>
     <div class="cat-container" id="cat-container"></div>
 
     <script>
-      // Function to fetch cat images from an API
-      function fetchCatImages() {
+      // Function to fetch and append cat images
+      function fetchAndAppendCatImage() {
         const container = document.getElementById("cat-container");
+        const catImage = document.createElement("img");
+        catImage.className = "cat-image";
+        container.appendChild(catImage);
 
-        fetch("https://api.thecatapi.com/v1/images/search")
+        fetch("https://api.thecatapi.com/v1/images/search?limit=1")
           .then((response) => response.json())
           .then((data) => {
-            data.forEach((cat) => {
-              const catImage = document.createElement("img");
-              catImage.src = cat.url;
-              catImage.className = "cat-image";
-              container.appendChild(catImage);
-            });
+            const catImageUrl = data[0].url;
+            catImage.src = catImageUrl;
           })
-          .catch((error) =>
-            console.error("Error fetching cat images: ", error)
-          );
+          .catch((error) => console.error("Error fetching cat image: ", error));
+
+        // Remove the oldest image after a new image is appended
+        if (container.children.length > 20) {
+          container.removeChild(container.children[0]);
+        }
       }
 
-      fetchCatImages();
+      // Fetch and append a cat image initially
+      fetchAndAppendCatImage();
+
+      // Set a timer to keep fetching and appending cat images
+      setInterval(fetchAndAppendCatImage, 2000); // Fetch every 5 seconds
     </script>
   </body>
 </html>
