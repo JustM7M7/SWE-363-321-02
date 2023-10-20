@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cat Pics Waterfall</title>
+    <style>
+      body {
+        margin: 0;
+        overflow: hidden;
+      }
+
+      .cat-container {
+        display: flex;
+        flex-wrap: wrap;
+      }
+
+      .cat-image {
+        width: 200px;
+        margin: 10px;
+        overflow: hidden;
+        float: left;
+        animation: waterfall 5s ease infinite;
+      }
+
+      @keyframes waterfall {
+        0% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(100%);
+        }
+        100% {
+          transform: translateY(0);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h1>each time you reload the page you will get a different picture ^_^</h1>
+    <div class="cat-container" id="cat-container"></div>
+
+    <script>
+      // Function to fetch cat images from an API
+      function fetchCatImages() {
+        const container = document.getElementById("cat-container");
+
+        fetch("https://api.thecatapi.com/v1/images/search")
+          .then((response) => response.json())
+          .then((data) => {
+            data.forEach((cat) => {
+              const catImage = document.createElement("img");
+              catImage.src = cat.url;
+              catImage.className = "cat-image";
+              container.appendChild(catImage);
+            });
+          })
+          .catch((error) =>
+            console.error("Error fetching cat images: ", error)
+          );
+      }
+
+      fetchCatImages();
+    </script>
+  </body>
+</html>
