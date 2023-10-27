@@ -107,5 +107,41 @@
       <p>&copy; 2023 MohMah. All rights reserved.</p>
     </footer>
     </section>
+    <script>
+      let canvas = document.getElementById("signatureCanvas");
+      let ctx = canvas.getContext("2d");
+      let drawing = false;
+      canvas.addEventListener("mousedown", () => {
+          drawing = true;
+      });
+      canvas.addEventListener("mouseup", () => {
+          drawing = false;
+          ctx.beginPath();
+          document.getElementById("signatureImage").value = canvas.toDataURL();
+      });
+      canvas.addEventListener("mousemove", draw);
+      function draw(event) {
+          if (!drawing) return;
+          ctx.lineWidth = 5;
+          ctx.lineCap = "round";
+      
+          let rect = canvas.getBoundingClientRect();  // Get canvas's bounding box
+          let scaleX = canvas.width / rect.width;    // Calculate x scaling factor
+          let scaleY = canvas.height / rect.height;  // Calculate y scaling factor
+      
+          // Adjust the x and y coordinates for the scaling and bounding box
+          let x = (event.clientX - rect.left) * scaleX;
+          let y = (event.clientY - rect.top) * scaleY;
+      
+          ctx.lineTo(x, y);
+          ctx.stroke();
+          ctx.beginPath();
+          ctx.moveTo(x, y);
+      }
+      function clearCanvas() {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          document.getElementById("signatureImage").value = "";
+      }
+  </script>
   </body>
 </html>
