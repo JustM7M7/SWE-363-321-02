@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Interactive Screensaver</title>
+    <style>
+      body {
+        margin: 0;
+      }
+      canvas {
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+      let camera, scene, renderer, geometry, material, mesh;
+      let lastInteractionTime = Date.now();
+      let isScreensaverActive = false;
+      const TIME = 0; // should be 60000 (1 min) but for testing purposes it is 1 sec
+      function createGeometry() {
+        const func = (u, v, target) => {
+          u *= 2 * Math.PI;
+          v *= Math.PI;
+
+          const x = Math.sin(u);
+          const y = Math.cos(v);
+          const z = Math.cos(u + v);
+
+          target.set(x, y, z).multiplyScalar(2);
+        };
+
+        return new THREE.ParametricBufferGeometry(func, 100, 20);
+      }
+
+      function init() {
+        camera = new THREE.PerspectiveCamera(
+          70,
+          window.innerWidth / window.innerHeight,
+          0.01,
+          10
+        );
+        camera.position.z = 5;
+        scene = new THREE.Scene();
+        geometry = createGeometry();
+        material = new THREE.MeshNormalMaterial();
+        mesh = new THREE.Mesh(geometry, material);
+        scene.add(mesh);
+
+        renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+      }
+      function animate() {
+        requestAnimationFrame(animate);
+        let currentTime = Date.now();
+        if (currentTime - lastInteractionTime > TIME && !isScreensaverActive) {
+          isScreensaverActive = true;
+          document.body.appendChild(renderer.domElement);
+        }
+
+        if (isScreensaverActive) {
+          mesh.rotation.x += 0.01;
+          mesh.rotation.y += 0.02;
+          renderer.render(scene, camera);
+        }
+      }
+
+      // we can also put other events such as window resize or keydown to stop the screensaver
+      document.addEventListener("mousemove", () => {
+        lastInteractionTime = Date.now();
+
+        if (isScreensaverActive) {
+          isScreensaverActive = false;
+          if (document.body.contains(renderer.domElement)) {
+            document.body.removeChild(renderer.domElement);
+          }
+        }
+      });
+      init();
+      animate();
+    </script>
+  </body>
+</html>
